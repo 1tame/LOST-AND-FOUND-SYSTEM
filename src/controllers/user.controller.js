@@ -1,12 +1,16 @@
 const express = require('express');
 const User = require('../model/userInfo');
+const bcrypt = require('bcrypt');
 
 exports.addUser = async(req, res) => {
 
     try {
         const {user_name, email, password, Phone} = req.body;
-        //validation
-        const user = new User({user_name, email, password, Phone});
+        
+        const hashedPwd = await bcrypt.hash(password);
+
+
+        const user = new User({user_name, email, password: hashedPwd, Phone});
         const savedInfo = await user.save();
         res.status(201).json(savedInfo);
     } catch (error) {
