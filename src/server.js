@@ -3,6 +3,7 @@ const connectDb = require('./config/dbconfig');
 const userRoutes = require('./routes/user.routes');
 const itemRoutes = require('./routes/item.routes');
 const claimRoutes = require('./routes/claim.routes');
+const errorHandler = require('./middleware/errorhandler');
 require('dotenv').config();
 
 const app = express();
@@ -22,6 +23,9 @@ app.use('/items', itemRoutes);
 app.use('/claims', claimRoutes);
 
 
+
+app.use(errorHandler);
+
 app.listen(port,  () => {
   console.log(`Server is running on port ${port}`);
 });
@@ -33,6 +37,8 @@ const con = async () => {
     console.error('DB Error:', error.message);
   }
 };
+
+
 
 con();
 

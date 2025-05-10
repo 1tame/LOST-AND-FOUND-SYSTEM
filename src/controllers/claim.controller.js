@@ -2,20 +2,26 @@ const express = require('express');
 const Claim = require('../model/claim');
 const Item = require('../model/Item');
 
-exports.claimItem = async(req, res) =>{
-    
-    try{
-    const claimInfo = new Claim(req.body);
-    const savedInfo = await claimInfo.save();
-    
-    res.status(200).json(savedInfo);
-    }catch(error){
-        res.status(500).json({message: error.message});
+exports.claimItem = async (req, res, next) => {
+  try {
+    const claimData = req.body;
+
+    if (req.file) {
+      claimData.image = req.file.path; // image path to DB
     }
+
+    const claimInfo = new Claim(claimData);
+    const savedInfo = await claimInfo.save();
+
+    res.status(200).json(savedInfo);
+  } catch (error) {
+    next(error);
+  }
 };
 
 
-exports.viewClaim = async(req, res)=>{
+
+exports.viewClaim = async(req, res, next)=>{
     const {id: itemId} = req.params;
     const userId = req.body.claimant_id;
 
@@ -29,26 +35,26 @@ exports.viewClaim = async(req, res)=>{
         const result = await Claim.find({item_id: itemId}).populate('claimant_id', 'Phone email');
         res.status(200).json(result);
     }catch(error){
-        res.status(400).json({message: error.message});
+        next(error);
     }
 };
 
 
-exports.clearInfo = async(req, res) =>{
+exports.clearInfo = async(req, res, next) =>{
     try{
         const result = await Claim.deleteMany({});
         res.status(201).json({message: "claim info cleaned successfully", deletedCount: result.deletedCount});
     }catch(error){
-        res.status(201).json({message: error.message});
+        next(error);
     }
 };
 
 
-exports.getAll = async(req, res)=>{
+exports.getAll = async(req, res, next)=>{
     try{
         const result = await Claim.find();
         res.status(200).json(result);
     }catch(error){
-        res.status(500).json({message: error.message});
+        next(error);
     };
-}
+};

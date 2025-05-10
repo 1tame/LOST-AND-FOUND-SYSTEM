@@ -19,6 +19,11 @@ const claimSchema = mongoose.Schema({
         specific_location: {type: String}
     },
 
+    image: {
+        type: String
+    },
+
+    
     status : {
         type: String, enum: ['Pending', 'Rejected', 'Approved']
     },

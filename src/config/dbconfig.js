@@ -10,4 +10,6 @@ const connectDb = async ()=>{
     }
 };
 
+//retry logic to be add
+
 module.exports = connectDb;
