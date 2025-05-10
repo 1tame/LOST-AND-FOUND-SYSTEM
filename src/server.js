@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 app.use('/users', userRoutes);
 app.use('/items', itemRoutes);
 app.use('/claims', claimRoutes);
+app.use('/uploads',express.static('uploads'));
 
 
 

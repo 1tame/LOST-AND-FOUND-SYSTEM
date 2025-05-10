@@ -7,7 +7,7 @@ const upload = require('../controllers/upload.controller');
 
 
 
-router.post('/add',authmiddleware,validateClaim,upload.single('image') ,claimController.claimItem);
+router.post('/add',authmiddleware,upload.single('image') ,validateClaim,claimController.claimItem);
 router.delete('/clear', claimController.clearInfo);
 router.get('/getAll',authmiddleware,claimController.getAll);
 router.get('/:id', claimController.viewClaim);
