@@ -13,7 +13,7 @@ exports.addUser = async(req, res, next) => {
 
         const user = new User({user_name, email, password: hashedPwd, Phone});
         const savedInfo = await user.save();
-        res.status(201).json({ status: "success", user: savedInfo });
+        res.status(201).json({message: "user created"});
 
     } catch (error) {
         next(error);
