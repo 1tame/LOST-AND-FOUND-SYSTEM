@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>View Claims</title>
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Claims on Your Items</h2>
+    <div id="claims"></div>
+    <a href="dashboard.html" class="btn">Back to Dashboard</a>
+  </div>
+
+  <script>
+    const API = "http://localhost:3000";
+
+    async function fetchClaims() {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userId");
+
+      if (!token || !userId) {
+        alert("Please login again");
+        window.location.href = "login.html";
+        return;
+      }
+
+      // 1. Get all items added by the user
+      const itemsRes = await fetch(`${API}/items/getAll`);
+      const items = await itemsRes.json();
+
+      // 2. Filter items added by this user
+      const userItems = items.filter(item => item.createdBy === userId);
+
+      // 3. Fetch claims on each item
+      const claimsContainer = document.getElementById("claims");
+      claimsContainer.innerHTML = "";
+
+      for (let item of userItems) {
+        const res = await fetch(`${API}/claims/${item._id}`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (res.ok) {
+          const claims = await res.json();
+          if (claims.length > 0) {
+            claimsContainer.innerHTML += `
+              <div class="card">
+                <h4>${item.Item_Type}</h4>
+                <p><strong>Claims:</strong></p>
+                ${claims.map(claim => `
+                  <p>📧 ${claim.claimant_id.email} | 📱 ${claim.claimant_id.Phone}</p>
+                  <p>📝 ${claim.description}</p>
+                  <hr>
+                `).join('')}
+              </div>
+            `;
+          }
+        }
+      }
+    }
+
+    fetchClaims();
+  </script>
+</body>
+</html>

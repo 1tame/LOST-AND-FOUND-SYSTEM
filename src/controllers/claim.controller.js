@@ -23,7 +23,7 @@ exports.claimItem = async (req, res, next) => {
 
 exports.viewClaim = async(req, res, next)=>{
     const {id: itemId} = req.params;
-    const userId = req.body.claimant_id;
+    const userId = req.user.userId;
 
     try{
         const item = await Item.findById(itemId);

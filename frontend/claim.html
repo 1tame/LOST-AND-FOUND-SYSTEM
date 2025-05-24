@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Claim Item</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div class="container form-card">
+    <h2>Claim Item</h2>
+    <form id="claimForm" enctype="multipart/form-data">
+      <input name="item_id" placeholder="Item ID" required>
+      <input name="claimant_id" placeholder="Your User ID" required>
+      <input name="description" placeholder="Describe why it’s yours" required>
+      <label for="image">Upload proof (optional)</label>
+      <input type="file" name="image" accept="image/png, image/jpeg">
+      <button type="submit" class="btn primary">Submit Claim</button>
+    </form>
+  </div>
+  <script src="assets/script.js"></script>
+</body>
+</html>

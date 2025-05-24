@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <nav class="main-nav">
+    <h2>📁 Dashboard</h2>
+    <ul>
+      <li><a href="#" onclick="switchTab('addItemSection')">Add Item</a></li>
+      <li><a href="#" onclick="switchTab('searchItemSection')">Search Items</a></li>
+      <li><a href="view-claims.html">View My Claims</a></li>
+      <li><a href="index.html">Go Back</a></li>
+      <li><button onclick="logout()" class="btn small">Logout</button></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+
+    <section class="card tab" id="addItemSection">
+      <h3>Add Lost Item</h3>
+      <form id="itemForm">
+        <input name="Item_Type" placeholder="Item Type" required>
+        <input name="description" placeholder="Description" required>
+        <input name="location.city" placeholder="City" required>
+        <input name="status" value="Lost" required>
+        <button type="submit" class="btn primary">Add Item</button>
+      </form>
+    </section>
+
+    <section class="card tab hidden" id="searchItemSection">
+      <h3>Search Found Items</h3>
+      <form id="searchForm">
+        <input name="Item_Type" placeholder="Item Type" required>
+        <input name="city" placeholder="City" required>
+        <button type="submit" class="btn">Search</button>
+      </form>
+      <div id="items"></div>
+    </section>
+  </div>
+
+  <!-- Claim Modal -->
+  <div id="claimModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close" onclick="closeClaimModal()">&times;</span>
+      <h3>Claim This Item</h3>
+      <form id="claimForm" enctype="multipart/form-data">
+        <input type="hidden" name="item_id" id="claimItemId">
+        <input type="hidden" name="claimant_id" id="claimUserId">
+        <input name="description" placeholder="Why is this item yours?" required>
+        <input name="message.item_name" placeholder="Item name you lost" required>
+        <input name="message.item_color" placeholder="Color of the item" required>
+        <input type="file" name="image" accept="image/png, image/jpeg">
+        <button type="submit" class="btn primary">Submit Claim</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Lost & Found System | All rights reserved.</p>
+  </footer>
+
+  <script src="assets/script.js"></script>
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab').forEach(el => el.classList.add('hidden'));
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

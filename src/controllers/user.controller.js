@@ -3,6 +3,8 @@ const User = require('../model/userInfo');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+
+//for a registration
 exports.addUser = async(req, res, next) => {
 
     try {
@@ -22,7 +24,7 @@ exports.addUser = async(req, res, next) => {
 };
 
 exports.login = async(req, res, next)=>{
-    const jwt_secret = process.env.jwt;
+const jwt_secret = process.env.jwt;
 
      if (!jwt_secret) {
         console.error("FATAL ERROR: jwt_secret is not defined in environment variables.");
